@@ -1,0 +1,26 @@
+name: Auto Sync LeetCode Submissions
+
+on:
+  push:
+    branches:
+      - main  # Change this if your branch name is different
+  schedule:
+    - cron: "*/10 * * * *"  # Runs every 10 minutes
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "LeetCode Sync Bot"
+          git config --global user.email "manjulasurisetti13@gmail.com" 
+
+      - name: Commit and Push Changes
+        run: |
+          git add LeetCode/
+          git commit -m "Auto-sync LeetCode submissions" || echo "No changes to commit"
+          git push origin main
